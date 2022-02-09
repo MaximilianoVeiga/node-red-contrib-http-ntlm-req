@@ -6,10 +6,22 @@ module.exports = function (RED) {
 		const node = this;
 
 		const resetStatus = () => node.status({});
-		const raiseError = (text, msg) => {
+		
+		const raiseError = (done, text) => {
 			node.status({ fill: "red", shape: "dot", text: text });
-			node.error(text, msg);
+			done(text);
 		};
+
+		const signalSuccess = (text) => {
+			node.status({ fill: "green", shape: "dot", text: getFormattedDate() + ' ' + text});
+		};
+
+		const getFormattedDate = () => {
+			var date = new Date();
+			var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  
+				date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			return str;
+		}
 
 		node.name = config.name;
 		node.url = config.url;
@@ -18,50 +30,63 @@ module.exports = function (RED) {
 
 		resetStatus();
 
-		node.on('input', function (msg) {
+		node.on('input', function (msg, send, done) {
 			const requestCallback = (err, res) => {
 				resetStatus();
 
 				if (res !== undefined && res.body !== undefined) {
+					msg.httpStatus = res.statusCode;
 					msg.payload = node.authconf.parsejson ? JSON.parse(res.body) : res.body;
 					if (res.statusCode !== 200) {
-						raiseError('Response from server: ' + res.statusCode, msg);
+						raiseError(done, 'Response from server: ' + res.statusCode);
+						return;
 					}
 				} else {
-					raiseError(err.message, msg);
+					msg.httpStatus = '---';
+					raiseError(done, err.message);
+					return;
 				}
 
-				node.send(msg);
+				msg.httpStatus = 200;
+				signalSuccess('http:'+ res.statusCode);
+				send(msg);
+				done();
 			};
 
-			var defaultHeader = msg.headers || {};
-			defaultHeader['Content-Type'] = 'application/json';
+			//headers
+			var usedHeader = msg.headers || {};
+			if (typeof usedHeader['Content-Type'] == 'undefined') {
+				usedHeader['Content-Type'] = 'application/json';
+			}
+
+			//url
+			let usedUrl = msg.url || node.url;
 
 			const connData = {
 				username: node.authconf.user,
 				password: node.authconf.pass,
 				domain: node.authconf.doman,
 				workstation: '',
-				headers: defaultHeader
+				headers: usedHeader
 			};
 
 			switch (node.method) {
 				case 0: // GET
 					{
-						connData.url = node.url + msg.payload;
+						connData.url = usedUrl + msg.payload;
 						httpntlm.get(connData, requestCallback);
 						break;
 					}
 				case 1: // POST
 					{
-						connData.url = node.url;
+						connData.url = usedUrl;
 						connData.body = msg.payload;
 						httpntlm.post(connData, requestCallback);
 						break;
 					}
 				default:
 					{
-						raiseError('No method defined!', msg);
+						raiseError(done, 'No method defined for method nr:' + node.method + '!');
 						break;
 					}
 			}
