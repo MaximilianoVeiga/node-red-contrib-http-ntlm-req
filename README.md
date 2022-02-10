@@ -11,6 +11,8 @@ Forked from https://github.com/IdanZel/node-red-contrib-http-ntlm-req
 * Errors are thrown for http response status codes differnt than 200 or network errors
 * Fixed contributors in package.json
 * Used done() instead of node.error()
+* Removed unused configuration fields: key, cert, token
+* Fixed method selection not working any more after changing the method once
 
 ## Usage
 To set up HTTP request, create a new auth config:
@@ -19,4 +21,4 @@ To set up HTTP request, create a new auth config:
 *   For get requests add the parameters to the URL
 *   For post requests add the content to msg.payload
 * Send the headers as object in msg.headers
-* Fill in *Username*, *Password*, *Client Key*, *Client Certificate*, *Token* if needed.
+* Fill in *Username*, *Password* if needed.

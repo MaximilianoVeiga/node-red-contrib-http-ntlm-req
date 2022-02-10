@@ -71,24 +71,17 @@ module.exports = function (RED) {
 			};
 
 			switch (node.method) {
-				case 0: // GET
-					{
-						connData.url = usedUrl + msg.payload;
-						httpntlm.get(connData, requestCallback);
-						break;
-					}
-				case 1: // POST
-					{
-						connData.url = usedUrl;
-						connData.body = msg.payload;
-						httpntlm.post(connData, requestCallback);
-						break;
-					}
-				default:
-					{
-						raiseError(done, 'No method defined for method nr:' + node.method + '!');
-						break;
-					}
+				case 'GET': {
+					connData.url = usedUrl + msg.payload;
+					httpntlm.get(connData, requestCallback);
+					break;
+				}
+				case 'POST': {
+					connData.url = usedUrl;
+					connData.body = msg.payload;
+					httpntlm.post(connData, requestCallback);
+					break;
+				}
 			}
 		});
 	}

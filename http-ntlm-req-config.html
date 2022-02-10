@@ -5,9 +5,6 @@
             name: { value: "", required: true },
             user: { value: "", required: false },
             pass: { value: "", required: false },
-            key: { value: "", required: false },
-            cert: { value: "", required: false },
-            token: { value: "", required: false },
             domain: { value: "", required: false }
         },
         label: function () {
@@ -31,18 +28,6 @@
         <input type="password" id="node-config-input-pass">
     </div>
     <div class="form-row">
-        <label for="node-config-input-key"><i class="fa fa-file"></i> Client Key</label>
-        <input type="text" id="node-config-input-key">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-cert"><i class="fa fa-file"></i> Client Certificate</label>
-        <input type="text" id="node-config-input-cert">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-token"><i class="fa fa-key"></i> Token</label>
-        <input type="text" id="node-config-input-token">
-    </div>
-    <div class="form-row">
         <label for="node-config-input-domain"><i class="fa fa-domain"></i> Domain</label>
         <input type="text" id="node-config-input-domain">
     </div>
@@ -55,7 +40,7 @@
     <p>
         <ul>
             <li> Select <i>Auth</i> method, the default would be set to None.</li>
-            <li> Fill in <i>Username</i>, <i>Password</i>, <i>Client Key</i>, <i>Client Certificate</i>, <i>Token</i> if needed. </li>
+            <li> Fill in <i>Username</i>, <i>Password</i> </li>
         </ul>
     </p>
 </script>
