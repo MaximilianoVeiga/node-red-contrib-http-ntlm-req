@@ -62,6 +62,8 @@ module.exports = function (RED) {
 			//url
 			let usedUrl = msg.url || node.url;
 
+			let usedPayload = msg.payload || '';
+
 			const connData = {
 				username: node.authconf.user,
 				password: node.authconf.pass,
@@ -72,13 +74,13 @@ module.exports = function (RED) {
 
 			switch (node.method) {
 				case 'GET': {
-					connData.url = usedUrl + msg.payload;
+					connData.url = usedUrl + usedPayload;
 					httpntlm.get(connData, requestCallback);
 					break;
 				}
 				case 'POST': {
 					connData.url = usedUrl;
-					connData.body = msg.payload;
+					connData.body = usedPayload;
 					httpntlm.post(connData, requestCallback);
 					break;
 				}
