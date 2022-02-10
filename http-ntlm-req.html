@@ -6,7 +6,8 @@
             name: 	{value:""},
             url:  	{ value: ""},
             method:	{ value: 0 ,  required: true},
-            auth:	{value: "", type: "http-ntlm-req-config"}
+            auth:	{value: "", type: "http-ntlm-req-config"},
+            parsejson: { value: false, required: false }
         },
         inputs:1,
         outputs:1,
@@ -42,7 +43,10 @@
         </select>
     </div>
 
-	
+    <div class="form-row">
+        <input type="checkbox" id="node-config-input-parsejson" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label for="node-config-input-parsejson" style="width: auto">Parse response payload to JSON</label>
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="http-ntlm-req">

@@ -6,8 +6,7 @@ module.exports = function (RED) {
         this.key = n.key;
         this.cert = n.cert;
         this.token = n.token;
-        this.doman = n.doman;
-        this.parsejson = n.parsejson;
+        this.domain = n.domain;
     }
 
     RED.nodes.registerType("http-ntlm-req-config", HttpNtlmReqConfig);

@@ -8,8 +8,7 @@
             key: { value: "", required: false },
             cert: { value: "", required: false },
             token: { value: "", required: false },
-            doman: { value: "", required: false },
-            parsejson: { value: false, required: false }
+            domain: { value: "", required: false }
         },
         label: function () {
             return this.name;
@@ -44,12 +43,8 @@
         <input type="text" id="node-config-input-token">
     </div>
     <div class="form-row">
-        <label for="node-config-input-doman"><i class="fa fa-doman"></i> Domain</label>
-        <input type="text" id="node-config-input-doman">
-    </div>
-    <div class="form-row">
-        <input type="checkbox" id="node-config-input-parsejson" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
-        <label for="node-config-input-parsejson" style="width: auto">Parse response payload to JSON</label>
+        <label for="node-config-input-domain"><i class="fa fa-domain"></i> Domain</label>
+        <input type="text" id="node-config-input-domain">
     </div>
 </script>
 

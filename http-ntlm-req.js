@@ -36,7 +36,7 @@ module.exports = function (RED) {
 
 				if (res !== undefined && res.body !== undefined) {
 					msg.httpStatus = res.statusCode;
-					msg.payload = node.authconf.parsejson ? JSON.parse(res.body) : res.body;
+					msg.payload = config.parsejson ? JSON.parse(res.body) : res.body;
 					if (res.statusCode !== 200) {
 						raiseError(done, 'Response from server: ' + res.statusCode);
 						return;
@@ -65,7 +65,7 @@ module.exports = function (RED) {
 			const connData = {
 				username: node.authconf.user,
 				password: node.authconf.pass,
-				domain: node.authconf.doman,
+				domain: node.authconf.domain,
 				workstation: '',
 				headers: usedHeader
 			};
