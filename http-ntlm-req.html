@@ -7,7 +7,8 @@
             url:  	{ value: ""},
             method:	{ value: 'GET' ,  required: true},
             auth:	{value: "", type: "http-ntlm-req-config"},
-            parsejson: { value: false, required: false }
+            parsejson: { value: false, required: false },
+            getblob: { value: false, required: false },
         },
         inputs:1,
         outputs:1,
@@ -46,6 +47,11 @@
     <div class="form-row">
         <input type="checkbox" id="node-input-parsejson" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
         <label for="node-input-parsejson" style="width: auto">Parse response payload to JSON</label>
+    </div>
+
+    <div class="form-row">
+        <input type="checkbox" id="node-input-getblob" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label for="node-input-getblob" style="width: auto">Get response as blob</label>
     </div>
 </script>
 
