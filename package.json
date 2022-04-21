@@ -1,7 +1,7 @@
 {
 	"name": "@fibrinogen/node-red-contrib-re-http-ntlm-req",
 	"description": "HTTP request with NTLM",
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/fibrinogen/node-red-contrib-re-http-ntlm-req.git"
