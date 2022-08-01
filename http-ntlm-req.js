@@ -6,19 +6,19 @@ module.exports = function (RED) {
 		const node = this;
 
 		const resetStatus = () => node.status({});
-		
+
 		const raiseError = (done, text) => {
 			node.status({ fill: "red", shape: "dot", text: text });
 			done(text);
 		};
 
 		const signalSuccess = (text) => {
-			node.status({ fill: "green", shape: "dot", text: getFormattedDate() + ' ' + text});
+			node.status({ fill: "green", shape: "dot", text: getFormattedDate() + ' ' + text });
 		};
 
 		const getFormattedDate = () => {
 			var date = new Date();
-			var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  
+			var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
 				date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 			return str;
 		}
@@ -37,7 +37,7 @@ module.exports = function (RED) {
 				if (res !== undefined && res.body !== undefined) {
 					msg.httpStatus = res.statusCode;
 					if (config.parsejson) {
-						msg.payload =  JSON.parse(res.body);
+						msg.payload = JSON.parse(res.body);
 					} else {
 						msg.payload = res.body;
 					}
@@ -53,7 +53,7 @@ module.exports = function (RED) {
 				}
 
 				msg.httpStatus = 200;
-				signalSuccess('http:'+ res.statusCode);
+				signalSuccess('http:' + res.statusCode);
 				send(msg);
 				done();
 			};
@@ -67,9 +67,8 @@ module.exports = function (RED) {
 			//url
 			let usedUrl = msg.url || node.url;
 
-			let usedPayload = msg.payload || '';
-
 			const connData = {
+				url: usedUrl,
 				username: node.authconf.user,
 				password: node.authconf.pass,
 				domain: node.authconf.domain,
@@ -80,12 +79,10 @@ module.exports = function (RED) {
 
 			switch (node.method) {
 				case 'GET': {
-					connData.url = usedUrl + usedPayload;
 					httpntlm.get(connData, requestCallback);
 					break;
 				}
 				case 'POST': {
-					connData.url = usedUrl;
 					connData.body = usedPayload;
 					httpntlm.post(connData, requestCallback);
 					break;
